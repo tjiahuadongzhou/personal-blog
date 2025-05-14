@@ -4,7 +4,7 @@
 
 ## 应用界面预览
 
-![XPro 语言学习应用界面预览](https://github.com/tjiahuadongzhou/my-personal-blog/raw/main/assets/images/app_screenshot.png)
+请打开项目根目录下的 `preview.html` 文件在浏览器中查看完整界面预览。
 
 *高保真原型展示：欢迎页面、登录页面、首页、单词学习、词库管理、添加词库、测试、测试进行和学习统计等界面*
 
