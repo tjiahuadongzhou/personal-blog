@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xpro - 测试进行中</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #3F6DE1;
+            --success-color: #34C759;
+            --warning-color: #FFCC00;
+            --error-color: #FF3B30;
+            --info-color: #5AC8FA;
+            --background-color: #F7F9FC;
+            --card-bg: #FFFFFF;
+            --text-primary: #2C3E50;
+            --text-secondary: #7F8C8D;
+            --border-color: #E0E6ED;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            height: 100vh;
+        }
+        
+        .status-bar {
+            height: 44px;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: #E0E6ED;
+            border-radius: 3px;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .timer-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary-color) 0%, var(--primary-color) 70%, #E0E6ED 70%, #E0E6ED 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .timer-circle::after {
+            content: "";
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        
+        .timer-text {
+            position: relative;
+            z-index: 10;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .option-btn {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            text-align: left;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-btn:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(63, 109, 225, 0.05);
+        }
+        
+        .option-btn.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(63, 109, 225, 0.05);
+        }
+        
+        .option-btn.correct {
+            border-color: var(--success-color);
+            background-color: rgba(52, 199, 89, 0.05);
+        }
+        
+        .option-btn.correct::after {
+            content: "\f00c"; /* Font Awesome check icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--success-color);
+        }
+        
+        .option-btn.incorrect {
+            border-color: var(--error-color);
+            background-color: rgba(255, 59, 48, 0.05);
+        }
+        
+        .option-btn.incorrect::after {
+            content: "\f00d"; /* Font Awesome times icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--error-color);
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(63, 109, 225, 0.2);
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(63, 109, 225, 0.3);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div class="flex items-center">
+            <i class="fas fa-signal"></i>
+            <span class="ml-1">4G</span>
+        </div>
+        <div>11:45</div>
+        <div class="flex items-center">
+            <span class="mr-1">89%</span>
+            <i class="fas fa-battery-three-quarters"></i>
+        </div>
+    </div>
+    
+    <!-- 顶部导航 -->
+    <div class="p-4 flex justify-between items-center">
+        <button onclick="confirmExit()" class="text-gray-600">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+        <div class="text-center">
+            <h1 class="font-bold text-lg">雅思核心词汇 <span class="badge bg-blue-100 text-blue-600">选择题</span></h1>
+            <div class="text-xs text-gray-500">测试中 · 共20题</div>
+        </div>
+        <div class="timer-circle">
+            <span class="timer-text">21</span>
+        </div>
+    </div>
+    
+    <!-- 进度条 -->
+    <div class="px-4 mb-6">
+        <div class="progress-bar">
+            <div class="progress-bar-fill" style="width: 35%"></div>
+        </div>
+        <div class="flex justify-between mt-2 text-xs text-gray-500">
+            <span>题目 7/20</span>
+            <div>
+                <span class="text-green-500">正确: 5</span>
+                <span class="mx-2">|</span>
+                <span class="text-red-500">错误: 1</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 测试内容 -->
+    <div class="flex-1 px-4 overflow-auto">
+        <!-- 题目 -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center mb-3">
+                <div class="text-sm text-gray-500">选择正确的释义</div>
+                <div class="flex items-center">
+                    <button class="text-gray-500 mr-3">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Ambiguity</h2>
+            <p class="text-gray-600">/ˌæmbɪˈɡjuːəti/</p>
+        </div>
+        
+        <!-- 选项 -->
+        <div id="options-container" class="mb-8">
+            <button class="option-btn w-full" onclick="selectOption(this)">确定性；明确性</button>
+            <button class="option-btn w-full" onclick="selectOption(this)">开放性；公开性</button>
+            <button class="option-btn w-full selected incorrect" onclick="selectOption(this)">复杂性；难解性</button>
+            <button class="option-btn w-full correct" onclick="selectOption(this)">模糊性；不明确性</button>
+        </div>
+        
+        <!-- 解释 -->
+        <div class="bg-blue-50 p-4 rounded-lg mb-8">
+            <h3 class="font-medium mb-2">解释</h3>
+            <p class="text-sm text-gray-600 mb-3">Ambiguity(模糊性；不明确性)是指含混不清或有多种解释的状态或品质。</p>
+            <div class="text-sm">
+                <p class="font-medium mb-1">例句：</p>
+                <p class="text-gray-600">There is considerable <span class="text-blue-500 font-medium">ambiguity</span> in the wording of the contract.</p>
+                <p class="text-gray-500 text-sm">这份合同的措辞相当含糊不清。</p>
+            </div>
+        </div>
+        
+        <!-- 导航按钮 -->
+        <div class="flex gap-4 pb-8">
+            <button onclick="prevQuestion()" class="flex-1 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium">
+                <i class="fas fa-arrow-left mr-2"></i> 上一题
+            </button>
+            <button onclick="nextQuestion()" class="flex-1 primary-btn">
+                下一题 <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // 20道模拟选择题数据
+        const questions = [
+            {
+                word: 'Ambiguity',
+                phonetic: '/ˌæmbɪˈɡjuːəti/',
+                options: ['确定性；明确性', '开放性；公开性', '复杂性；难解性', '模糊性；不明确性'],
+                answer: 3,
+                meaning: '模糊性；不明确性',
+                desc: '含混不清或有多种解释的状态或品质',
+                example: 'There is considerable <span class="text-blue-500 font-medium">ambiguity</span> in the wording of the contract.',
+                example_cn: '这份合同的措辞相当含糊不清。'
+            },
+            {
+                word: 'Consensus',
+                phonetic: '/kənˈsensəs/',
+                options: ['共识，一致意见', '分歧，争议', '计划，方案', '目标，目的'],
+                answer: 0,
+                meaning: '共识，一致意见',
+                desc: '大多数人同意的意见',
+                example: 'There is a growing <span class="text-blue-500 font-medium">consensus</span> about the best way to achieve this.',
+                example_cn: '关于实现这一目标的最佳方式，大家越来越有共识。'
+            },
+            {
+                word: 'Facilitate',
+                phonetic: '/fəˈsɪlɪteɪt/',
+                options: ['阻碍，妨碍', '促进，使便利', '忽视，疏忽', '解释，说明'],
+                answer: 1,
+                meaning: '促进，使便利',
+                desc: '使某事变得更容易',
+                example: 'The new ramp will <span class="text-blue-500 font-medium">facilitate</span> the entry of wheelchairs.',
+                example_cn: '新建的坡道将方便轮椅进出。'
+            },
+            {
+                word: 'Comprehensive',
+                phonetic: '/ˌkɒmprɪˈhensɪv/',
+                options: ['片面的', '全面的，综合的', '模糊的', '临时的'],
+                answer: 1,
+                meaning: '全面的，综合的',
+                desc: '包括所有内容的',
+                example: 'We offer a <span class="text-blue-500 font-medium">comprehensive</span> range of services.',
+                example_cn: '我们提供全面的服务。'
+            },
+            {
+                word: 'Diversity',
+                phonetic: '/daɪˈvɜːsəti/',
+                options: ['多样性', '单一性', '复杂性', '确定性'],
+                answer: 0,
+                meaning: '多样性',
+                desc: '多种多样的状态',
+                example: 'Cultural <span class="text-blue-500 font-medium">diversity</span> is important in education.',
+                example_cn: '文化多样性在教育中很重要。'
+            },
+            {
+                word: 'Implement',
+                phonetic: '/ˈɪmplɪment/',
+                options: ['计划', '工具', '实施，执行', '取消'],
+                answer: 2,
+                meaning: '实施，执行',
+                desc: '开始使用某种计划或系统',
+                example: 'The school will <span class="text-blue-500 font-medium">implement</span> the new curriculum next year.',
+                example_cn: '学校明年将实施新课程。'
+            },
+            {
+                word: 'Obtain',
+                phonetic: '/əbˈteɪn/',
+                options: ['失去', '获得，得到', '拒绝', '隐藏'],
+                answer: 1,
+                meaning: '获得，得到',
+                desc: '得到想要的东西',
+                example: 'You must <span class="text-blue-500 font-medium">obtain</span> permission before entering.',
+                example_cn: '进入前必须获得许可。'
+            },
+            {
+                word: 'Perspective',
+                phonetic: '/pəˈspektɪv/',
+                options: ['观点，视角', '计划', '工具', '障碍'],
+                answer: 0,
+                meaning: '观点，视角',
+                desc: '看待事物的方式',
+                example: 'Try to see the issue from a different <span class="text-blue-500 font-medium">perspective</span>.',
+                example_cn: '试着从不同角度看问题。'
+            },
+            {
+                word: 'Subsequent',
+                phonetic: '/ˈsʌbsɪkwənt/',
+                options: ['随后的，后来的', '前面的', '同时的', '偶然的'],
+                answer: 0,
+                meaning: '随后的，后来的',
+                desc: '在某事之后发生的',
+                example: '<span class="text-blue-500 font-medium">Subsequent</span> events proved him right.',
+                example_cn: '后来的事实证明他是对的。'
+            },
+            {
+                word: 'Sustain',
+                phonetic: '/səˈsteɪn/',
+                options: ['终止', '维持，支撑', '忽略', '减少'],
+                answer: 1,
+                meaning: '维持，支撑',
+                desc: '保持某种状态',
+                example: 'The economy cannot <span class="text-blue-500 font-medium">sustain</span> this level of growth.',
+                example_cn: '经济无法维持这种增长速度。'
+            },
+            {
+                word: 'Transform',
+                phonetic: '/trænsˈfɔːm/',
+                options: ['保持', '转移', '改变，转变', '减少'],
+                answer: 2,
+                meaning: '改变，转变',
+                desc: '使发生重大变化',
+                example: 'Technology will <span class="text-blue-500 font-medium">transform</span> our lives.',
+                example_cn: '科技将改变我们的生活。'
+            },
+            {
+                word: 'Ultimate',
+                phonetic: '/ˈʌltɪmət/',
+                options: ['最终的，根本的', '临时的', '次要的', '模糊的'],
+                answer: 0,
+                meaning: '最终的，根本的',
+                desc: '最后的或最重要的',
+                example: 'Our <span class="text-blue-500 font-medium">ultimate</span> goal is success.',
+                example_cn: '我们的最终目标是成功。'
+            },
+            {
+                word: 'Valid',
+                phonetic: '/ˈvælɪd/',
+                options: ['无效的', '有效的，有根据的', '模糊的', '临时的'],
+                answer: 1,
+                meaning: '有效的，有根据的',
+                desc: '有法律效力或合理的',
+                example: 'You need a <span class="text-blue-500 font-medium">valid</span> passport to travel.',
+                example_cn: '你需要有效护照才能旅行。'
+            },
+            {
+                word: 'Widespread',
+                phonetic: '/ˈwaɪdspred/',
+                options: ['局部的', '广泛的，普遍的', '模糊的', '临时的'],
+                answer: 1,
+                meaning: '广泛的，普遍的',
+                desc: '分布广的',
+                example: 'There is <span class="text-blue-500 font-medium">widespread</span> support for the policy.',
+                example_cn: '该政策得到了广泛支持。'
+            },
+            {
+                word: 'Accumulate',
+                phonetic: '/əˈkjuːmjəleɪt/',
+                options: ['减少', '积累，堆积', '分散', '终止'],
+                answer: 1,
+                meaning: '积累，堆积',
+                desc: '逐渐增加',
+                example: 'Dust had <span class="text-blue-500 font-medium">accumulated</span> on the shelves.',
+                example_cn: '架子上积了灰尘。'
+            },
+            {
+                word: 'Benefit',
+                phonetic: '/ˈbenɪfɪt/',
+                options: ['损失', '益处，好处', '障碍', '终止'],
+                answer: 1,
+                meaning: '益处，好处',
+                desc: '有利的影响',
+                example: 'Regular exercise has many <span class="text-blue-500 font-medium">benefits</span>.',
+                example_cn: '经常锻炼有很多好处。'
+            },
+            {
+                word: 'Clarify',
+                phonetic: '/ˈklærɪfaɪ/',
+                options: ['混淆', '澄清，阐明', '隐藏', '终止'],
+                answer: 1,
+                meaning: '澄清，阐明',
+                desc: '使更清楚',
+                example: 'Could you <span class="text-blue-500 font-medium">clarify</span> your last point?',
+                example_cn: '你能澄清一下你最后一点吗？'
+            },
+            {
+                word: 'Demonstrate',
+                phonetic: '/ˈdemənstreɪt/',
+                options: ['隐藏', '演示，证明', '终止', '分散'],
+                answer: 1,
+                meaning: '演示，证明',
+                desc: '展示某事的真实性',
+                example: 'The experiment <span class="text-blue-500 font-medium">demonstrates</span> the theory.',
+                example_cn: '实验证明了这个理论。'
+            },
+            {
+                word: 'Emphasize',
+                phonetic: '/ˈemfəsaɪz/',
+                options: ['忽略', '强调，重视', '终止', '分散'],
+                answer: 1,
+                meaning: '强调，重视',
+                desc: '特别指出',
+                example: 'He <span class="text-blue-500 font-medium">emphasized</span> the importance of teamwork.',
+                example_cn: '他强调了团队合作的重要性。'
+            }
+        ];
+        let current = 0;
+        let selected = null;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let finished = false;
+
+        function renderQuestion(idx) {
+            const q = questions[idx];
+            selected = null;
+            document.querySelector('.timer-text').textContent = 21;
+            timeLeft = 21;
+            // 渲染题干
+            document.querySelector('.mb-6 h2').textContent = q.word;
+            document.querySelector('.mb-6 p.text-gray-600').textContent = q.phonetic;
+            // 渲染选项
+            let optionsHtml = '';
+            q.options.forEach((opt, i) => {
+                optionsHtml += `<button class="option-btn w-full" onclick="selectOption(this,${i})">${opt}</button>`;
+            });
+            document.getElementById('options-container').innerHTML = optionsHtml;
+            // 渲染解析
+            document.querySelector('.bg-blue-50 .text-sm.text-gray-600').textContent = q.meaning + '：' + q.desc;
+            document.querySelector('.bg-blue-50 .text-gray-600').innerHTML = q.example;
+            document.querySelector('.bg-blue-50 .text-gray-500').textContent = q.example_cn;
+            // 进度
+            document.querySelector('.progress-bar-fill').style.width = `${((idx+1)/questions.length)*100}%`;
+            document.querySelector('.flex.justify-between.mt-2.text-xs.text-gray-500 span').textContent = `题目 ${idx+1}/${questions.length}`;
+            document.querySelector('.text-green-500').textContent = `正确: ${correctCount}`;
+            document.querySelector('.text-red-500').textContent = `错误: ${wrongCount}`;
+        }
+        // 选择选项
+        function selectOption(element, idx) {
+            if(selected!==null) return;
+            selected = idx;
+            const q = questions[current];
+            document.querySelectorAll('.option-btn').forEach((btn, i) => {
+                btn.classList.remove('selected','correct','incorrect');
+                if(i===idx) btn.classList.add('selected');
+                if(i===q.answer) btn.classList.add('correct');
+                if(i===idx && idx!==q.answer) btn.classList.add('incorrect');
+            });
+            if(idx===q.answer) correctCount++;
+            else wrongCount++;
+        }
+        // 下一题
+        function nextQuestion() {
+            if(selected===null) return;
+            if(current < questions.length-1){
+                current++;
+                renderQuestion(current);
+            }else{
+                finished = true;
+                showFinish();
+            }
+        }
+        // 上一题
+        function prevQuestion() {
+            if(current>0){
+                current--;
+                renderQuestion(current);
+            }
+        }
+        // 完成提示
+        function showFinish() {
+            document.querySelector('.flex-1.px-4.overflow-auto').innerHTML = `
+                <div class="flex flex-col items-center justify-center h-full">
+                    <i class="fas fa-check-circle text-green-500 text-6xl mb-6"></i>
+                    <h2 class="text-2xl font-bold mb-2">测试完成！</h2>
+                    <p class="text-gray-600 mb-6">恭喜你完成本轮测试</p>
+                    <button class="primary-btn w-48" onclick="location.href='test.html'">返回测试主页</button>
+                </div>
+            `;
+            document.querySelector('.progress-bar-fill').style.width = `100%`;
+            document.querySelector('.flex.justify-between.mt-2.text-xs.text-gray-500 span').textContent = `题目 ${questions.length}/${questions.length}`;
+        }
+        // 初始化
+        renderQuestion(current);
+        
+        // 确认退出
+        function confirmExit() {
+            if (confirm('确定要退出当前测试吗？进度将会保存。')) {
+                window.location.href = 'test.html';
+            }
+        }
+        
+        // 倒计时定时器
+        let timeLeft = 21;
+        const timerInterval = setInterval(() => {
+            timeLeft--;
+            document.querySelector('.timer-text').textContent = timeLeft;
+            
+            // 更新计时器图形
+            const percent = (timeLeft / 30) * 100;
+            document.querySelector('.timer-circle').style.background = 
+                `conic-gradient(var(--primary-color) 0%, var(--primary-color) ${percent}%, #E0E6ED ${percent}%, #E0E6ED 100%)`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                // 自动进入下一题
+                nextQuestion();
+            }
+        }, 1000);
+    </script>
+</body>
+</html> 

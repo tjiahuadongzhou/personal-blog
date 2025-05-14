@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xpro - 测试</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #3F6DE1;
+            --success-color: #34C759;
+            --warning-color: #FFCC00;
+            --error-color: #FF3B30;
+            --info-color: #5AC8FA;
+            --background-color: #F7F9FC;
+            --card-bg: #FFFFFF;
+            --text-primary: #2C3E50;
+            --text-secondary: #7F8C8D;
+            --border-color: #E0E6ED;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            height: 100vh;
+        }
+        
+        .status-bar {
+            height: 44px;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .tab-bar {
+            height: 70px;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 10px;
+            padding: 8px 0;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-icon {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(63, 109, 225, 0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(63, 109, 225, 0.3);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge-blue {
+            background-color: rgba(63, 109, 225, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .badge-green {
+            background-color: rgba(52, 199, 89, 0.1);
+            color: var(--success-color);
+        }
+        
+        .badge-orange {
+            background-color: rgba(255, 149, 0, 0.1);
+            color: #FF9500;
+        }
+        
+        .badge-red {
+            background-color: rgba(255, 59, 48, 0.1);
+            color: var(--error-color);
+        }
+        
+        .option-card {
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .option-card.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(63, 109, 225, 0.05);
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div class="flex items-center">
+            <i class="fas fa-signal"></i>
+            <span class="ml-1">4G</span>
+        </div>
+        <div>11:45</div>
+        <div class="flex items-center">
+            <span class="mr-1">89%</span>
+            <i class="fas fa-battery-three-quarters"></i>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <main class="flex-1 p-5 overflow-auto">
+        <h1 class="text-xl font-bold mb-5">测试</h1>
+        
+        <!-- 测试统计卡片 -->
+        <section class="card p-5 mb-6">
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-2">
+                    <h2 class="font-bold">测试统计</h2>
+                    <span class="text-sm text-gray-500">本月</span>
+                </div>
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                        <div class="text-xl font-bold text-primary-600">8</div>
+                        <div class="text-xs text-gray-500">已完成测试</div>
+                    </div>
+                    <div>
+                        <div class="text-xl font-bold text-green-500">86%</div>
+                        <div class="text-xs text-gray-500">平均正确率</div>
+                    </div>
+                    <div>
+                        <div class="text-xl font-bold text-amber-500">132</div>
+                        <div class="text-xs text-gray-500">测试单词</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 最近测试 -->
+            <div>
+                <h3 class="text-sm font-medium mb-3">最近测试</h3>
+                <div class="bg-gray-50 rounded-lg p-3 mb-3">
+                    <div class="flex justify-between items-center mb-1">
+                        <div class="font-medium">雅思核心词汇</div>
+                        <div class="badge badge-green">92%</div>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <div>选择题 • 25题</div>
+                        <div>2天前</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-3">
+                    <div class="flex justify-between items-center mb-1">
+                        <div class="font-medium">日语N3考试</div>
+                        <div class="badge badge-orange">78%</div>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <div>填空题 • 20题</div>
+                        <div>4天前</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 测试模式 -->
+        <section class="mb-6">
+            <h2 class="font-bold mb-4">开始新测试</h2>
+            
+            <!-- 词库选择 -->
+            <div class="card p-4 mb-5">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="font-medium mb-1">选择词库</h3>
+                        <div class="text-sm text-gray-500">从已有词库中选择测试内容</div>
+                    </div>
+                    <button class="bg-gray-100 text-gray-600 py-2 px-4 rounded-lg text-sm">
+                        选择
+                        <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 测试类型 -->
+            <h3 class="font-medium mb-3">测试类型</h3>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <!-- 选择题 -->
+                <div id="type-choice" class="option-card card p-4 selected" onclick="selectTestType(this)">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mb-3">
+                        <i class="fas fa-list-ul"></i>
+                    </div>
+                    <h4 class="font-medium mb-1">选择题</h4>
+                    <p class="text-xs text-gray-500">从多个选项中选择正确答案</p>
+                </div>
+                
+                <!-- 填空题 -->
+                <div id="type-fill" class="option-card card p-4" onclick="selectTestType(this)">
+                    <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-500 mb-3">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                    <h4 class="font-medium mb-1">填空题</h4>
+                    <p class="text-xs text-gray-500">根据释义或例句填写单词</p>
+                </div>
+                
+                <!-- 听力题 -->
+                <div id="type-listening" class="option-card card p-4" onclick="selectTestType(this)">
+                    <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-500 mb-3">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <h4 class="font-medium mb-1">听力题</h4>
+                    <p class="text-xs text-gray-500">听音频选择或拼写单词</p>
+                </div>
+                
+                <!-- 闪卡测试 -->
+                <div id="type-flashcard" class="option-card card p-4" onclick="selectTestType(this)">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-500 mb-3">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4 class="font-medium mb-1">闪卡测试</h4>
+                    <p class="text-xs text-gray-500">翻卡自评掌握程度</p>
+                </div>
+            </div>
+            
+            <!-- 测试设置 -->
+            <div class="mb-6">
+                <h3 class="font-medium mb-3">测试设置</h3>
+                
+                <div class="bg-white rounded-lg p-4 mb-3">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <div class="font-medium mb-1">题目数量</div>
+                            <div class="text-sm text-gray-500">调整测试题目数量</div>
+                        </div>
+                        <div class="bg-gray-100 rounded-full flex items-center">
+                            <button class="w-8 h-8 flex items-center justify-center text-gray-500">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="w-8 text-center font-medium">20</span>
+                            <button class="w-8 h-8 flex items-center justify-center text-gray-500">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <div class="font-medium mb-1">时间限制</div>
+                            <div class="text-sm text-gray-500">每题答题时间</div>
+                        </div>
+                        <select class="bg-gray-100 text-gray-700 py-2 px-3 rounded-lg text-sm border-0 focus:ring-0">
+                            <option>不限时</option>
+                            <option>15秒</option>
+                            <option selected>30秒</option>
+                            <option>60秒</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="font-medium mb-1">难度范围</div>
+                            <div class="text-sm text-gray-500">按记忆掌握程度筛选</div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-sm text-gray-500 mr-2">全部</span>
+                            <label class="switch relative inline-block w-12 h-6">
+                                <input type="checkbox" class="opacity-0 w-0 h-0">
+                                <span class="slider bg-gray-300 absolute cursor-pointer rounded-full inset-0 before:absolute before:h-5 before:w-5 before:left-0.5 before:bottom-0.5 before:bg-white before:rounded-full before:transition-all checked:before:translate-x-6 checked:bg-blue-500"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 开始测试按钮 -->
+            <button class="primary-btn w-full mb-4" onclick="startTest()">开始测试</button>
+            <p class="text-center text-xs text-gray-500">测试结果将用于优化你的学习计划</p>
+        </section>
+    </main>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <a href="home.html" class="tab-item">
+            <i class="fas fa-home tab-icon"></i>
+            <span>首页</span>
+        </a>
+        <a href="wordbank.html" class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>词库</span>
+        </a>
+        <a href="word-learn.html" class="tab-item">
+            <div class="w-12 h-12 rounded-full bg-primary-600 flex items-center justify-center text-white">
+                <i class="fas fa-play"></i>
+            </div>
+        </a>
+        <a class="tab-item active">
+            <i class="fas fa-award tab-icon"></i>
+            <span>测试</span>
+        </a>
+        <a href="stats.html" class="tab-item">
+            <i class="fas fa-chart-line tab-icon"></i>
+            <span>统计</span>
+        </a>
+    </div>
+    
+    <script>
+        // 选择测试类型
+        function selectTestType(element) {
+            // 移除所有选中状态
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // 添加选中状态到当前元素
+            element.classList.add('selected');
+        }
+        
+        // 开始测试
+        function startTest() {
+            // 获取选中的测试类型
+            const selectedType = document.querySelector('.option-card.selected').id;
+            
+            // 跳转到测试进行页面
+            window.location.href = 'test-session.html';
+        }
+    </script>
+</body>
+</html> 

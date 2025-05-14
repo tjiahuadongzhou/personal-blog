@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xpro - 添加词库</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #3F6DE1;
+            --success-color: #34C759;
+            --warning-color: #FFCC00;
+            --error-color: #FF3B30;
+            --info-color: #5AC8FA;
+            --background-color: #F7F9FC;
+            --card-bg: #FFFFFF;
+            --text-primary: #2C3E50;
+            --text-secondary: #7F8C8D;
+            --border-color: #E0E6ED;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            height: 100vh;
+        }
+        
+        .status-bar {
+            height: 44px;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            font-size: 16px;
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(63, 109, 225, 0.1);
+        }
+        
+        .select-field {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            font-size: 16px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237F8C8D'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 20px;
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+        
+        .select-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(63, 109, 225, 0.1);
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(63, 109, 225, 0.2);
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(63, 109, 225, 0.3);
+        }
+        
+        .secondary-btn {
+            color: var(--primary-color);
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            width: 100%;
+            border: 1px solid var(--primary-color);
+            background-color: white;
+        }
+        
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            background-color: #EDF2F7;
+            border-radius: 100px;
+            padding: 6px 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .tag-item.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(63, 109, 225, 0.05);
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div class="flex items-center">
+            <i class="fas fa-signal"></i>
+            <span class="ml-1">4G</span>
+        </div>
+        <div>11:45</div>
+        <div class="flex items-center">
+            <span class="mr-1">89%</span>
+            <i class="fas fa-battery-three-quarters"></i>
+        </div>
+    </div>
+    
+    <!-- 顶部导航 -->
+    <div class="p-4 flex justify-between items-center">
+        <button onclick="history.back()" class="flex items-center text-gray-600">
+            <i class="fas fa-chevron-left mr-2"></i> 返回
+        </button>
+        <h1 class="text-xl font-bold">新建词库</h1>
+        <div class="w-6"></div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="flex-1 p-5 overflow-auto">
+        <form>
+            <!-- 基本信息 -->
+            <section class="mb-6">
+                <h2 class="text-lg font-bold mb-4">基本信息</h2>
+                
+                <div class="mb-4">
+                    <label for="wordbank-name" class="block text-sm font-medium text-gray-700 mb-1">词库名称</label>
+                    <input type="text" id="wordbank-name" class="input-field" placeholder="给你的词库起个名字">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="language" class="block text-sm font-medium text-gray-700 mb-1">语言</label>
+                    <select id="language" class="select-field">
+                        <option value="en">英语 🇬🇧</option>
+                        <option value="jp">日语 🇯🇵</option>
+                        <option value="fr">法语 🇫🇷</option>
+                        <option value="de">德语 🇩🇪</option>
+                        <option value="es">西班牙语 🇪🇸</option>
+                        <option value="ko">韩语 🇰🇷</option>
+                        <option value="ru">俄语 🇷🇺</option>
+                        <option value="other">其他语言</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="difficulty" class="block text-sm font-medium text-gray-700 mb-1">难度级别</label>
+                    <select id="difficulty" class="select-field">
+                        <option value="1">初级 - 基础入门词汇</option>
+                        <option value="2">中级 - 日常交流词汇</option>
+                        <option value="3">高级 - 专业学术词汇</option>
+                        <option value="4">精通 - 专业领域词汇</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">词库描述 (选填)</label>
+                    <textarea id="description" class="input-field" rows="3" placeholder="简单描述一下这个词库的内容和用途"></textarea>
+                </div>
+            </section>
+            
+            <!-- 分类和标签 -->
+            <section class="mb-6">
+                <h2 class="text-lg font-bold mb-4">分类和标签</h2>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">选择标签</label>
+                    <div class="flex flex-wrap">
+                        <div class="tag-item selected">考试</div>
+                        <div class="tag-item">学术</div>
+                        <div class="tag-item">商务</div>
+                        <div class="tag-item">旅游</div>
+                        <div class="tag-item">日常</div>
+                        <div class="tag-item">专业</div>
+                        <div class="tag-item">娱乐</div>
+                        <div class="tag-item">文学</div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="custom-tag" class="block text-sm font-medium text-gray-700 mb-1">自定义标签 (选填)</label>
+                    <div class="flex">
+                        <input type="text" id="custom-tag" class="input-field rounded-r-none" placeholder="输入自定义标签">
+                        <button type="button" class="bg-gray-100 text-gray-600 px-4 rounded-r-lg border border-l-0 border-gray-300">
+                            添加
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 单词导入 -->
+            <section class="mb-8">
+                <h2 class="text-lg font-bold mb-4">单词导入</h2>
+                
+                <div class="mb-6">
+                    <div class="file-upload mb-3">
+                        <input type="file" id="file-upload" class="hidden">
+                        <label for="file-upload">
+                            <div class="mb-3 w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto">
+                                <i class="fas fa-file-import text-blue-500 text-xl"></i>
+                            </div>
+                            <p class="font-medium mb-1">拖拽文件至此处或点击上传</p>
+                            <p class="text-sm text-gray-500">支持 Excel、CSV、TXT 格式文件</p>
+                        </label>
+                    </div>
+                    <p class="text-xs text-gray-500 text-center">文件格式要求：每行一个单词，格式为"单词,释义,例句"</p>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="flex items-center justify-center text-center px-4 py-3 border border-gray-300 rounded-lg text-primary-600 cursor-pointer hover:bg-gray-50">
+                        <i class="fas fa-keyboard mr-2"></i>
+                        <span>手动输入单词</span>
+                    </label>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="flex items-center justify-center text-center px-4 py-3 border border-gray-300 rounded-lg text-primary-600 cursor-pointer hover:bg-gray-50">
+                        <i class="fas fa-copy mr-2"></i>
+                        <span>从已有词库复制</span>
+                    </label>
+                </div>
+            </section>
+            
+            <!-- 隐私设置 -->
+            <section class="mb-8">
+                <h2 class="text-lg font-bold mb-4">隐私设置</h2>
+                
+                <div class="flex items-center mb-4">
+                    <input type="radio" id="private" name="privacy" value="private" class="w-4 h-4 text-blue-600">
+                    <label for="private" class="ml-2">
+                        <div class="font-medium">仅自己可见</div>
+                        <div class="text-sm text-gray-500">只有你可以查看和编辑此词库</div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center mb-4">
+                    <input type="radio" id="public" name="privacy" value="public" class="w-4 h-4 text-blue-600" checked>
+                    <label for="public" class="ml-2">
+                        <div class="font-medium">公开</div>
+                        <div class="text-sm text-gray-500">所有人可以查看此词库，但只有你可以编辑</div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center">
+                    <input type="radio" id="shared" name="privacy" value="shared" class="w-4 h-4 text-blue-600">
+                    <label for="shared" class="ml-2">
+                        <div class="font-medium">仅好友可见</div>
+                        <div class="text-sm text-gray-500">只有你的好友可以查看此词库</div>
+                    </label>
+                </div>
+            </section>
+            
+            <!-- 操作按钮 -->
+            <div class="flex gap-4 mb-8">
+                <button type="button" class="secondary-btn" onclick="history.back()">取消</button>
+                <button type="button" class="primary-btn" onclick="createWordbank()">创建词库</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // 标签选择逻辑
+        const tagItems = document.querySelectorAll('.tag-item');
+        tagItems.forEach(tag => {
+            tag.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+        });
+        
+        // 创建词库
+        function createWordbank() {
+            // 这里可以添加表单验证逻辑
+            
+            // 模拟成功创建并跳转
+            alert('词库创建成功！');
+            window.location.href = 'wordbank.html';
+        }
+    </script>
+</body>
+</html> 

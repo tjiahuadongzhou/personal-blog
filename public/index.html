@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的个人博客 - API服务器</title>
+  <style>
+    body {
+      font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #2c3e50;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+    .container {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    code {
+      background: #e8e8e8;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    .api-link {
+      margin-top: 15px;
+    }
+    .api-link a {
+      display: inline-block;
+      background: #3498db;
+      color: white;
+      padding: 8px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    .api-link a:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <h1>个人博客 API 服务器</h1>
+  
+  <div class="container">
+    <p>这是博客网站的 API 服务器。前端应用正在运行于: <code>http://localhost:5173</code></p>
+    
+    <p>API 端点:</p>
+    <ul>
+      <li><code>/api/posts</code> - 获取所有文章</li>
+      <li><code>/api/posts/:id</code> - 获取单篇文章</li>
+      <li><code>/api/test</code> - API 测试端点</li>
+    </ul>
+    
+    <div class="api-link">
+      <a href="/api/test" target="_blank">测试 API 连接</a>
+      <a href="/api/posts" target="_blank">查看所有文章</a>
+      <a href="http://localhost:5173" target="_blank">访问前端应用</a>
+    </div>
+  </div>
+</body>
+</html> 
+ 

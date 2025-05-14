@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xpro - 首页</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #3F6DE1;
+            --success-color: #34C759;
+            --warning-color: #FFCC00;
+            --error-color: #FF3B30;
+            --info-color: #5AC8FA;
+            --background-color: #F7F9FC;
+            --card-bg: #FFFFFF;
+            --text-primary: #2C3E50;
+            --text-secondary: #7F8C8D;
+            --border-color: #E0E6ED;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            height: 100vh;
+        }
+        
+        .status-bar {
+            height: 44px;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(63, 109, 225, 0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(63, 109, 225, 0.3);
+        }
+        
+        .tab-bar {
+            height: 70px;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 10px;
+            padding: 8px 0;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-icon {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        
+        .progress-ring {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        
+        .progress-ring-circle {
+            fill: transparent;
+            stroke: var(--border-color);
+            stroke-width: 8;
+        }
+        
+        .progress-ring-circle-progress {
+            fill: transparent;
+            stroke: var(--primary-color);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 283; /* 2π × 45 */
+            stroke-dashoffset: 70; /* 283 - 283 * 0.75 */
+            transform: rotate(-90deg);
+            transform-origin: center;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .streak-badge {
+            background-color: rgba(63, 109, 225, 0.1);
+            color: var(--primary-color);
+            border-radius: 100px;
+            padding: 6px 12px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div class="flex items-center">
+            <i class="fas fa-signal"></i>
+            <span class="ml-1">4G</span>
+        </div>
+        <div>11:45</div>
+        <div class="flex items-center">
+            <span class="mr-1">89%</span>
+            <i class="fas fa-battery-three-quarters"></i>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <main class="flex-1 overflow-auto p-5">
+        <!-- 头部问候区 -->
+        <header class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-bold mb-1">你好，小明</h1>
+                <div class="streak-badge">
+                    <i class="fas fa-fire mr-2"></i>
+                    连续学习 8 天
+                </div>
+            </div>
+            <button class="w-10 h-10 rounded-full overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=100&auto=format&fit=crop" 
+                     alt="用户头像" 
+                     class="w-full h-full object-cover">
+                <!-- 来源：Unsplash，由Konstantin Hachaturyan拍摄 -->
+            </button>
+        </header>
+        
+        <!-- 今日计划卡片 -->
+        <section class="card mb-6">
+            <div class="p-5">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold">今日学习计划</h2>
+                    <span class="text-sm text-gray-500">8月15日</span>
+                </div>
+                
+                <div class="flex items-center">
+                    <div class="progress-ring mr-4">
+                        <svg viewBox="0 0 100 100" width="120" height="120">
+                            <circle class="progress-ring-circle" cx="50" cy="50" r="45"></circle>
+                            <circle class="progress-ring-circle-progress" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="progress-text">
+                            <div class="text-2xl font-bold text-primary-600">75%</div>
+                            <div class="text-sm text-gray-500">已完成</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1">
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">新单词</span>
+                                <span class="text-primary-600 font-medium">15/20</span>
+                            </div>
+                            <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-primary-600 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">复习单词</span>
+                                <span class="text-primary-600 font-medium">30/40</span>
+                            </div>
+                            <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-primary-600 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="primary-btn w-full mt-5" onclick="location.href='word-learn.html'">继续学习</button>
+            </div>
+        </section>
+        
+        <!-- 词库区域 -->
+        <section class="mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold">我的词库</h2>
+                <a href="wordbank.html" class="text-primary-600 text-sm">查看全部</a>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <!-- 词库卡片1 -->
+                <div class="card relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-500 text-white text-xs py-1 px-2 rounded-bl-lg">
+                        进行中
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-1">雅思核心词汇</h3>
+                        <div class="text-xs text-gray-500 mb-3">800个单词 • 🇬🇧 英语</div>
+                        <div class="flex justify-between items-center">
+                            <div class="text-xs">已学习: <span class="text-primary-600 font-medium">65%</span></div>
+                            <button class="bg-primary-50 text-primary-600 text-xs py-1 px-2 rounded-lg">学习</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 词库卡片2 -->
+                <div class="card">
+                    <div class="p-4">
+                        <h3 class="font-medium mb-1">日语N3考试</h3>
+                        <div class="text-xs text-gray-500 mb-3">1200个单词 • 🇯🇵 日语</div>
+                        <div class="flex justify-between items-center">
+                            <div class="text-xs">已学习: <span class="text-primary-600 font-medium">32%</span></div>
+                            <button class="bg-primary-50 text-primary-600 text-xs py-1 px-2 rounded-lg">学习</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 词库卡片3 -->
+                <div class="card">
+                    <div class="p-4">
+                        <h3 class="font-medium mb-1">商务英语</h3>
+                        <div class="text-xs text-gray-500 mb-3">550个单词 • 🇬🇧 英语</div>
+                        <div class="flex justify-between items-center">
+                            <div class="text-xs">已学习: <span class="text-primary-600 font-medium">18%</span></div>
+                            <button class="bg-primary-50 text-primary-600 text-xs py-1 px-2 rounded-lg">学习</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 添加词库卡片 -->
+                <div class="card border-2 border-dashed border-gray-300 flex items-center justify-center p-4">
+                    <button class="flex flex-col items-center text-gray-500" onclick="location.href='add-wordbank.html'">
+                        <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-2">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <span class="text-sm">添加词库</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 学习统计 -->
+        <section class="card p-5 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold">学习统计</h2>
+                <a href="stats.html" class="text-primary-600 text-sm">详细分析</a>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-primary-600">1,285</div>
+                    <div class="text-xs text-gray-500">已学单词</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-green-500">85%</div>
+                    <div class="text-xs text-gray-500">记忆准确率</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-amber-500">42</div>
+                    <div class="text-xs text-gray-500">学习小时</div>
+                </div>
+            </div>
+            
+            <!-- 简化的周统计图表 -->
+            <div class="mt-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="text-sm font-medium">本周学习情况</div>
+                    <div class="text-xs text-gray-500">单位: 分钟</div>
+                </div>
+                <div class="flex justify-between items-end h-24">
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 bg-blue-100 rounded-t-md" style="height: 40px;"></div>
+                        <div class="text-xs mt-1">一</div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 bg-blue-100 rounded-t-md" style="height: 60px;"></div>
+                        <div class="text-xs mt-1">二</div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 bg-blue-100 rounded-t-md" style="height: 30px;"></div>
+                        <div class="text-xs mt-1">三</div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 bg-blue-500 rounded-t-md" style="height: 75px;"></div>
+                        <div class="text-xs mt-1">四</div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 bg-blue-100 rounded-t-md" style="height: 50px;"></div>
+                        <div class="text-xs mt-1">五</div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 bg-blue-100 rounded-t-md" style="height: 42px;"></div>
+                        <div class="text-xs mt-1">六</div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 bg-blue-100 rounded-t-md" style="height: 20px;"></div>
+                        <div class="text-xs mt-1">日</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+        <a class="tab-item active">
+            <i class="fas fa-home tab-icon"></i>
+            <span>首页</span>
+        </a>
+        <a href="wordbank.html" class="tab-item">
+            <i class="fas fa-book tab-icon"></i>
+            <span>词库</span>
+        </a>
+        <a href="word-learn.html" class="tab-item">
+            <div class="w-12 h-12 rounded-full bg-primary-600 flex items-center justify-center text-white">
+                <i class="fas fa-play"></i>
+            </div>
+        </a>
+        <a href="test.html" class="tab-item">
+            <i class="fas fa-award tab-icon"></i>
+            <span>测试</span>
+        </a>
+        <a href="stats.html" class="tab-item">
+            <i class="fas fa-chart-line tab-icon"></i>
+            <span>统计</span>
+        </a>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xpro - 欢迎</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #3F6DE1;
+            --success-color: #34C759;
+            --warning-color: #FFCC00;
+            --error-color: #FF3B30;
+            --info-color: #5AC8FA;
+            --background-color: #F7F9FC;
+            --card-bg: #FFFFFF;
+            --text-primary: #2C3E50;
+            --text-secondary: #7F8C8D;
+            --border-color: #E0E6ED;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+        
+        .slide {
+            flex: 0 0 100%;
+            height: 100vh;
+        }
+        
+        .pagination-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            margin: 0 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .pagination-dot.active {
+            background-color: var(--primary-color);
+            width: 20px;
+            border-radius: 4px;
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(63, 109, 225, 0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(63, 109, 225, 0.3);
+        }
+        
+        .secondary-btn {
+            color: var(--primary-color);
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background-color: rgba(63, 109, 225, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- 欢迎页第一屏 -->
+        <section class="slide flex flex-col items-center justify-between p-8 text-center">
+            <div></div>
+            
+            <div class="flex flex-col items-center">
+                <div class="mb-6 bg-blue-600 rounded-full w-20 h-20 flex items-center justify-center text-white text-4xl">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1 class="text-4xl font-bold mb-4">xpro</h1>
+                <h2 class="text-2xl font-medium mb-6">科学高效的语言学习工具</h2>
+                <p class="text-gray-600 mb-8 max-w-xs">基于记忆科学，让语言学习变得轻松有效</p>
+                
+                <div class="flex space-x-2 mb-8">
+                    <div class="pagination-dot active"></div>
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot"></div>
+                </div>
+                
+                <div class="w-full">
+                    <button class="primary-btn w-full mb-4" onclick="nextSlide()">开始探索</button>
+                    <button class="secondary-btn w-full" onclick="goToLogin()">已有账号？登录</button>
+                </div>
+            </div>
+            
+            <div></div>
+        </section>
+        
+        <!-- 欢迎页第二屏 -->
+        <section class="slide flex flex-col items-center justify-between p-8 text-center">
+            <div class="flex justify-end w-full">
+                <button class="text-gray-500 text-sm" onclick="goToLogin()">跳过</button>
+            </div>
+            
+            <div class="flex flex-col items-center">
+                <img src="https://images.unsplash.com/photo-1546521343-4eb2c9845a3b?q=80&w=500&auto=format&fit=crop" 
+                     alt="间隔重复学习插图" 
+                     class="w-64 h-64 object-cover rounded-3xl mb-8">
+                <!-- 来源：Unsplash，由Clark Tibbs拍摄 -->
+                
+                <h2 class="text-2xl font-bold mb-6">科学的记忆方法</h2>
+                
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="flex flex-col items-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <p class="text-sm">基于间隔重复</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <p class="text-sm">数据追踪分析</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <p class="text-sm">优化学习时间</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <p class="text-sm">智能复习计划</p>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-2 mb-8">
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot active"></div>
+                    <div class="pagination-dot"></div>
+                </div>
+                
+                <button class="primary-btn w-full" onclick="nextSlide()">继续</button>
+            </div>
+            
+            <div></div>
+        </section>
+        
+        <!-- 欢迎页第三屏 -->
+        <section class="slide flex flex-col items-center justify-between p-8 text-center">
+            <div class="flex justify-end w-full">
+                <button class="text-gray-500 text-sm" onclick="goToLogin()">跳过</button>
+            </div>
+            
+            <div class="flex flex-col items-center">
+                <img src="https://images.unsplash.com/photo-1547480053-7d174f67b557?q=80&w=500&auto=format&fit=crop" 
+                     alt="个性化学习路径插图" 
+                     class="w-64 h-64 object-cover rounded-3xl mb-8">
+                <!-- 来源：Unsplash，由Kobu Agency拍摄 -->
+                
+                <h2 class="text-2xl font-bold mb-6">个性化学习路径</h2>
+                <p class="text-gray-600 mb-8 max-w-xs">根据你的学习进度和目标，智能规划最佳学习内容和复习计划</p>
+                
+                <div class="flex space-x-2 mb-8">
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot"></div>
+                    <div class="pagination-dot active"></div>
+                </div>
+                
+                <div class="w-full">
+                    <button class="primary-btn w-full mb-4" onclick="goToLogin()">立即开始</button>
+                    <button class="secondary-btn w-full" onclick="goToLogin()">已有账号？登录</button>
+                </div>
+            </div>
+            
+            <div></div>
+        </section>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slideContainer = document.querySelector('.slide-container');
+        const slides = document.querySelectorAll('.slide');
+        
+        function updateSlidePosition() {
+            slideContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // 更新分页指示器
+            document.querySelectorAll('.pagination-dot').forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+        
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlidePosition();
+            } else {
+                goToLogin();
+            }
+        }
+        
+        function goToLogin() {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html> 
