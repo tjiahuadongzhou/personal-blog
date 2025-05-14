@@ -2,6 +2,12 @@
 
 一个使用现代Web技术栈构建的语言学习平台，帮助用户高效学习外语的应用原型。
 
+## 应用界面预览
+
+![XPro 语言学习应用界面预览](https://raw.githubusercontent.com/tjiahuadongzhou/my-personal-blog/main/assets/images/xpro_showcase.jpg)
+
+*高保真原型展示：欢迎页面、登录页面、首页、单词学习、词库管理、添加词库、测试、测试进行和学习统计等界面*
+
 ## 项目特点
 
 - 响应式设计，适配移动端和桌面端

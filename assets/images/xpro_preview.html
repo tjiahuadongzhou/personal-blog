@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XPro语言学习应用界面预览</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+        .design-info {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .design-info span {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+        }
+        .design-info span svg {
+            margin-right: 5px;
+        }
+        .mockups {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .mockup-group {
+            margin-bottom: 20px;
+        }
+        .mockup-section {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+        .mockup-title {
+            color: #1a73e8;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .mockup-desc {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .phone-mockup {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .footer {
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>xpro 语言学习应用</h1>
+        <div class="subtitle">高保真原型展示</div>
+        
+        <div class="design-info">
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                设计稿
+            </span>
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+                Tailwind CSS
+            </span>
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 19l9 2-9-18-9 18 9-2z"></path>
+                </svg>
+                FontAwesome
+            </span>
+        </div>
+        
+        <div class="mockups">
+            <!-- 第一行 -->
+            <div class="mockup-section">
+                <div class="mockup-title">欢迎页面</div>
+                <div class="mockup-desc">初始登录时的欢迎引导页面</div>
+                <img src="https://via.placeholder.com/270x585/f8f9fa/888?text=欢迎页面" alt="欢迎页面" class="phone-mockup">
+            </div>
+            
+            <div class="mockup-section">
+                <div class="mockup-title">登录页面</div>
+                <div class="mockup-desc">用户登录或注册页面</div>
+                <img src="https://via.placeholder.com/270x585/f8f9fa/888?text=登录页面" alt="登录页面" class="phone-mockup">
+            </div>
+            
+            <div class="mockup-section">
+                <div class="mockup-title">首页</div>
+                <div class="mockup-desc">主页面，显示学习计划和统计数据</div>
+                <img src="https://via.placeholder.com/270x585/f8f9fa/888?text=首页" alt="首页" class="phone-mockup">
+            </div>
+            
+            <!-- 第二行 -->
+            <div class="mockup-section">
+                <div class="mockup-title">单词学习</div>
+                <div class="mockup-desc">词语学习与单词复习页面</div>
+                <img src="https://via.placeholder.com/270x585/f8f9fa/888?text=单词学习" alt="单词学习" class="phone-mockup">
+            </div>
+            
+            <div class="mockup-section">
+                <div class="mockup-title">词库管理</div>
+                <div class="mockup-desc">词库和学习内容管理</div>
+                <img src="https://via.placeholder.com/270x585/f8f9fa/888?text=词库管理" alt="词库管理" class="phone-mockup">
+            </div>
+            
+            <div class="mockup-section">
+                <div class="mockup-title">添加词库</div>
+                <div class="mockup-desc">创建和导入新词库</div>
+                <img src="https://via.placeholder.com/270x585/f8f9fa/888?text=添加词库" alt="添加词库" class="phone-mockup">
+            </div>
+            
+            <!-- 第三行 -->
+            <div class="mockup-section">
+                <div class="mockup-title">测试</div>
+                <div class="mockup-desc">测试设置和自定义</div>
+                <img src="https://via.placeholder.com/270x585/f8f9fa/888?text=测试" alt="测试" class="phone-mockup">
+            </div>
+            
+            <div class="mockup-section">
+                <div class="mockup-title">测试进行</div>
+                <div class="mockup-desc">测试中的界面展示</div>
+                <img src="https://via.placeholder.com/270x585/f8f9fa/888?text=测试进行" alt="测试进行" class="phone-mockup">
+            </div>
+            
+            <div class="mockup-section">
+                <div class="mockup-title">学习统计</div>
+                <div class="mockup-desc">学习数据和进度分析</div>
+                <img src="https://via.placeholder.com/270x585/f8f9fa/888?text=学习统计" alt="学习统计" class="phone-mockup">
+            </div>
+        </div>
+        
+        <div class="footer">
+            xpro 语言学习应用原型 © 2024<br>
+            设计框架：Tailwind CSS和FontAwesome
+        </div>
+    </div>
+</body>
+</html> 
