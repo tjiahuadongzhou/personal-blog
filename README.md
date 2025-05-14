@@ -4,9 +4,11 @@
 
 ## 项目预览
 
-![博客首页预览](screenshots/homepage.png)
+![博客首页预览](https://github.com/tjiahuadongzhou/personal-blog/blob/main/screenshots/blog_preview.html)
 
 *博客首页 - 展示最新博客文章列表，包括技术、生活、思考等分类*
+
+**注意:** 要查看完整效果图，请在浏览器中打开 http://localhost:5173
 
 ## 项目特点
 
